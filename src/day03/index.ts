@@ -71,11 +71,9 @@ const part1 = (rawInput: string) => {
   const symbolPositions = getSymbolPositions(input);
   const numberData = input.reduce(getNumberPositions, []);
 
-  const neighbouredNumbers = numberData.filter(({ startX, startY, length }) => {
-    return symbolPositions.some(({ x, y }) => {
-      return isAdjacent(x, y, startX, startY, length);
-    });
-  });
+  const neighbouredNumbers = numberData.filter(({ startX, startY, length }) =>
+    symbolPositions.some(({ x, y }) => isAdjacent(x, y, startX, startY, length)),
+  );
   return neighbouredNumbers.reduce((a, b) => a + b.value, 0);
 };
 
@@ -86,9 +84,9 @@ const part2 = (rawInput: string) => {
   const numberData = input.reduce(getNumberPositions, []);
 
   const relevantNumbers = symbolPositions.reduce((numbers: number[][], { x, y }) => {
-    const numberNeighbours = numberData.filter(({ startX, startY, length }) => {
-      return isAdjacent(x, y, startX, startY, length);
-    });
+    const numberNeighbours = numberData.filter(({ startX, startY, length }) =>
+      isAdjacent(x, y, startX, startY, length),
+    );
     if (numberNeighbours.length > 1) {
       numbers.push(numberNeighbours.map(({ value }) => value));
     }
