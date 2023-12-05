@@ -53,7 +53,7 @@ const part2 = (rawInput: string): number => {
   const ratioMaps = getRatioMaps(input);
   while (seedData.length) {
     const [start, length] = seedData.splice(0, 2);
-    const seeds = Array.from({ length }, (_, i) => i + start);
+    const seeds = Array.from({ length }, (_, i) => i + start); // this creates several hundred million elements
     const locations = getSeedLocations(seeds, ratioMaps);
     const thisMinLocation = Math.min(...locations);
     if (thisMinLocation < minLocation) {
