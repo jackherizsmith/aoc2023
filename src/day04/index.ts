@@ -12,7 +12,6 @@ function getWinners(card: string): number[] {
 
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput).split("\n");
-
   const cardScores = input.map((card) => {
     const winners = getWinners(card);
     return winners.length ? Math.pow(2, winners.length - 1) : 0;
