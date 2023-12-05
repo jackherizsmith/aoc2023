@@ -10,7 +10,7 @@ function getWinners(card: string): number[] {
   return winningNumbers.filter((winner) => usersNumbers.includes(winner)).map(Number);
 }
 
-const part1 = (rawInput: string) => {
+const part1 = (rawInput: string): number => {
   const input = parseInput(rawInput).split("\n");
   const cardScores = input.map((card) => {
     const winners = getWinners(card);
@@ -19,7 +19,7 @@ const part1 = (rawInput: string) => {
   return cardScores.reduce((a, b) => a + b, 0);
 };
 
-const part2 = (rawInput: string) => {
+const part2 = (rawInput: string): number => {
   const input = parseInput(rawInput).split("\n");
   const initialCards: Record<string, number> = {};
   for (const n in input) {

@@ -8,7 +8,7 @@ const availableBlocks: Record<string, number> = {
   blue: 14,
 };
 
-const part1 = (rawInput: string) => {
+const part1 = (rawInput: string): number => {
   const input = parseInput(rawInput).split("\n");
   const playableGames = input.map((game, i) => {
     const rounds = game.split(": ")[1].split("; ");
@@ -26,7 +26,7 @@ const part1 = (rawInput: string) => {
 
 type CubeColour = "red" | "blue" | "green";
 
-const part2 = (rawInput: string) => {
+const part2 = (rawInput: string): number => {
   const input = parseInput(rawInput).split("\n");
   const gamePowers: number[] = input.map((game) => {
     const rounds = game.split(": ")[1].split("; ");

@@ -65,7 +65,7 @@ function isAdjacent(symbolX: number, symbolY: number, numberX: number, numberY: 
   );
 }
 
-const part1 = (rawInput: string) => {
+const part1 = (rawInput: string): number => {
   const input = parseInput(rawInput).split("\n");
 
   const symbolPositions = getSymbolPositions(input);
@@ -77,7 +77,7 @@ const part1 = (rawInput: string) => {
   return neighbouredNumbers.reduce((a, b) => a + b.value, 0);
 };
 
-const part2 = (rawInput: string) => {
+const part2 = (rawInput: string): number => {
   const input = parseInput(rawInput).split("\n");
 
   const symbolPositions = getSymbolPositions(input).filter(({ character }) => character === "*");

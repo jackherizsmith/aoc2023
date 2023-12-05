@@ -2,7 +2,7 @@ import run from "aocrunner";
 
 const parseInput = (rawInput: string) => rawInput;
 
-const part1 = (rawInput: string) => {
+const part1 = (rawInput: string): number => {
   const input = parseInput(rawInput).split("\n");
   const baseNumbers = input.map((str) => {
     const strNumbers = str.replace(/\D/g, "");
@@ -32,7 +32,7 @@ const stringNumbers: Record<string, string> = {
   "9": "9",
 };
 
-const part2 = (rawInput: string) => {
+const part2 = (rawInput: string): number => {
   const input = parseInput(rawInput).split("\n");
   const searchStrings = Object.keys(stringNumbers);
   const baseNumbers = input.map((str) => {
