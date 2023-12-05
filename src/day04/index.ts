@@ -2,7 +2,7 @@ import run from "aocrunner";
 
 const parseInput = (rawInput: string) => rawInput;
 
-function getWinners(card: string): number[] {
+function getWinners(card: string) {
   const numbers = card.split(": ")[1];
   const [win, user] = numbers.split(" | ");
   const winningNumbers = win.split(" ").filter(Boolean);
