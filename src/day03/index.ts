@@ -83,16 +83,16 @@ const part2 = (rawInput: string) => {
   const symbolPositions = getSymbolPositions(input).filter(({ character }) => character === "*");
   const numberData = input.reduce(getNumberPositions, []);
 
-  const relevantNumbers = symbolPositions.reduce((numbers: number[][], { x, y }) => {
+  const relevantNumbers = symbolPositions.reduce((numbers: number[], { x, y }) => {
     const numberNeighbours = numberData.filter(({ startX, startY, length }) =>
       isAdjacent(x, y, startX, startY, length),
     );
     if (numberNeighbours.length > 1) {
-      numbers.push(numberNeighbours.map(({ value }) => value));
+      numbers.push(numberNeighbours.map(({ value }) => value).reduce((a, b) => a * b, 1));
     }
     return numbers;
   }, []);
-  return relevantNumbers.reduce((a, b) => a + b.reduce((c, d) => c * d), 0);
+  return relevantNumbers.reduce((a, b) => a + b, 0);
 };
 
 run({
