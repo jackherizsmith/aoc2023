@@ -3,6 +3,7 @@ import run from "aocrunner";
 const parseInput = (rawInput: string) => rawInput;
 
 type RatioMap = { destination: number; source: number; length: number };
+type SeedsRange = { start: number; length: number };
 
 function getRatioMaps(maps: string[]) {
   const ruleSets = maps.flatMap((map) => {
@@ -18,6 +19,7 @@ function getRatioMaps(maps: string[]) {
       const [destination, source, length] = text.split(" ");
       maps[maps.length - 1].push({ destination: +destination, source: +source, length: +length });
     }
+    maps[maps.length - 1] = maps[maps.length - 1].sort((a, b) => a.source - b.source);
     return maps;
   }, []);
   return ruleMaps;
@@ -38,6 +40,53 @@ function getSeedLocations(seeds: number[], ratioMaps: RatioMap[][]) {
   });
 }
 
+function getNearestSeedLocationsViaRange(seedsRanges: SeedsRange[], ratioMaps: RatioMap[][]) {
+  return seedsRanges.map((seedRange) => {
+    let mappedIdRanges = [seedRange];
+    ratioMaps.forEach((maps) => {
+      let nextMappedIdRanges: SeedsRange[] = [];
+      mappedIdRanges.forEach(({ start, length }) => {
+        let nextInterestingSeed = start;
+        let remainingSeedsCount = length;
+        while (remainingSeedsCount > 0) {
+          const seedInRange = maps.find(
+            (map) => nextInterestingSeed >= map.source && nextInterestingSeed < map.source + map.length,
+          );
+
+          if (seedInRange) {
+            const relevantRange = seedInRange.source + seedInRange.length - nextInterestingSeed;
+            const mappedStart = nextInterestingSeed + (seedInRange.destination - seedInRange.source);
+            nextMappedIdRanges.push({ start: mappedStart, length: Math.min(remainingSeedsCount, relevantRange) });
+            remainingSeedsCount -= relevantRange;
+            nextInterestingSeed += relevantRange;
+            continue;
+          }
+
+          const nextRange = maps.find(
+            (map) =>
+              map.source > nextInterestingSeed && map.source + map.length < nextInterestingSeed + remainingSeedsCount,
+          );
+
+          if (nextRange) {
+            const relevantRange = nextRange.source - nextInterestingSeed;
+            nextMappedIdRanges.push({ start: nextInterestingSeed, length: relevantRange });
+            remainingSeedsCount -= relevantRange;
+            nextInterestingSeed += relevantRange;
+            continue;
+          }
+
+          const relevantRange = remainingSeedsCount;
+          nextMappedIdRanges.push({ start: nextInterestingSeed, length: relevantRange });
+          remainingSeedsCount -= relevantRange;
+          nextInterestingSeed += relevantRange;
+        }
+      });
+      mappedIdRanges = [...nextMappedIdRanges];
+    });
+    return Math.min(...mappedIdRanges.map((a) => a.start));
+  });
+}
+
 const part1 = (rawInput: string): number => {
   const input = parseInput(rawInput).split("\n\n");
   const seeds = input.shift()?.split(": ")[1].split(" ").map(Number) || [];
@@ -48,19 +97,14 @@ const part1 = (rawInput: string): number => {
 
 const part2 = (rawInput: string): number => {
   const input = parseInput(rawInput).split("\n\n");
-  let seedData = input.shift()?.split(": ")[1].split(" ").map(Number) || [];
-  let minLocation = 10000000;
+  const seedsData = input.shift()?.split(": ")[1].split(" ").map(Number) || [];
+  const seedsRanges = seedsData.reduce(
+    (ranges: SeedsRange[], data, i) => (i % 2 === 0 ? [...ranges, { start: data, length: seedsData[i + 1] }] : ranges),
+    [],
+  );
   const ratioMaps = getRatioMaps(input);
-  while (seedData.length) {
-    const [start, length] = seedData.splice(0, 2);
-    const seeds = Array.from({ length }, (_, i) => i + start); // this creates several hundred million elements
-    const locations = getSeedLocations(seeds, ratioMaps);
-    const thisMinLocation = Math.min(...locations);
-    if (thisMinLocation < minLocation) {
-      minLocation = thisMinLocation;
-    }
-  }
-  return minLocation;
+  const locations = getNearestSeedLocationsViaRange(seedsRanges, ratioMaps);
+  return Math.min(...locations);
 };
 
 run({
