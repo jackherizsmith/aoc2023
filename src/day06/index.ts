@@ -33,8 +33,7 @@ const part2 = (rawInput: string): number => {
   const [timeString, distanceString] = parseInput(rawInput).split("\n");
   const time = +(timeString.match(/\d+/g) || []).reduce((a, b) => a + b);
   const distance = +(distanceString.match(/\d+/g) || []).reduce((a, b) => a + b);
-  const opportunities = countOpportunities({ time, distance });
-  return opportunities;
+  return countOpportunities({ time, distance });
 };
 
 run({
