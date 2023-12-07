@@ -96,7 +96,7 @@ const part1 = (rawInput: string): number => {
     .split("\n");
   const handsData = input.map(getHandsData);
   const rankedHands = getRankedHands(handsData, RULES_1);
-  return rankedHands.reduce((a, b, i) => a + +b.bid * (i + 1), 0);
+  return rankedHands.reduce((sum, { bid }, i) => sum + +bid * (i + 1), 0);
 };
 
 const CHARS_TO_NUMS_2: Record<string, string> = {
@@ -113,7 +113,7 @@ const part2 = (rawInput: string): number => {
     .split("\n");
   const handsData = input.map(getHandsData);
   const rankedHands = getRankedHands(handsData, RULES_2);
-  return rankedHands.reduce((a, b, i) => a + +b.bid * (i + 1), 0);
+  return rankedHands.reduce((sum, { bid }, i) => sum + +bid * (i + 1), 0);
 };
 
 run({
