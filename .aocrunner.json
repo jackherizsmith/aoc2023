@@ -98,11 +98,11 @@
         "solved": true,
         "result": "253638586",
         "attempts": [],
-        "time": 6.240125
+        "time": 5.937333
       },
       "part2": {
-        "solved": false,
-        "result": "253017526",
+        "solved": true,
+        "result": "253253225",
         "attempts": [
           "NaN",
           "252314391",
@@ -111,7 +111,7 @@
           "253421469",
           "253017526"
         ],
-        "time": 12.91425
+        "time": 11.1055
       }
     },
     {
