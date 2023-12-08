@@ -8,18 +8,18 @@ type HandData = {
   score: number;
 };
 
-const calculateScore = (handCards: number[], wildcardCount: number): number => {
-  if (handCards[0] + wildcardCount >= 5) {
+const calculateScore = (regularCards: number[], wildcardCount: number): number => {
+  if (regularCards[0] + wildcardCount >= 5) {
     return 7;
   }
-  if (handCards[0] + wildcardCount === 4) {
+  if (regularCards[0] + wildcardCount === 4) {
     return 6;
   }
-  if (handCards[0] + wildcardCount === 3) {
-    return handCards[1] === 2 ? 5 : 4;
+  if (regularCards[0] + wildcardCount === 3) {
+    return regularCards[1] === 2 ? 5 : 4;
   }
-  if (handCards[0] + wildcardCount === 2) {
-    return handCards[1] === 2 ? 3 : 2;
+  if (regularCards[0] + wildcardCount === 2) {
+    return regularCards[1] === 2 ? 3 : 2;
   }
   return 1;
 };
