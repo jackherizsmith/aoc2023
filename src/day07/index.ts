@@ -45,7 +45,7 @@ const getHandData = (hand: string, wildcard?: string) => {
 };
 
 const byScoreAndValue = (a: HandData, b: HandData) => {
-  // cards are converted to pentadecimal system for numerical sorting when the score is the same,
+  // cards were converted to pentadecimal system for numerical sorting when the score is the same,
   // e.g. both hands being compared contain three of a kind (assigned score of 3 in calculateScore)
   return a.score === b.score ? parseInt(a.value, 15) - parseInt(b.value, 15) : a.score - b.score;
 };
