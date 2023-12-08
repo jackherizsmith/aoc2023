@@ -10,7 +10,7 @@ type HandData = {
 
 const calculateScore = (regularCards: number[], wildcardCount: number): number => {
   const firstCardCount = regularCards[0] + wildcardCount;
-  const twoOfSecondCard = regularCards[1] === 2;
+  const hasTwoOfSecondCard = regularCards[1] === 2;
   if (firstCardCount > 5) {
     throw new Error("There cannot be more than 5 of a kind, including wildcards");
   }
@@ -20,9 +20,9 @@ const calculateScore = (regularCards: number[], wildcardCount: number): number =
     case 4:
       return 6;
     case 3:
-      return twoOfSecondCard ? 5 : 4;
+      return hasTwoOfSecondCard ? 5 : 4;
     case 2:
-      return twoOfSecondCard ? 3 : 2;
+      return hasTwoOfSecondCard ? 3 : 2;
   }
   return 1;
 };
