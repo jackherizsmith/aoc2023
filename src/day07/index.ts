@@ -73,7 +73,7 @@ AAAKQ 4
 AAKKQ 3
 AAKQT 2
 AKQT9 1`,
-        expected: 6440,
+        expected: 140,
       },
     ],
     solution: part1,
@@ -98,7 +98,7 @@ AAKQT 2
 AJKQT 2
 AKQT9 1
         `,
-        expected: 5905,
+        expected: 672,
       },
     ],
     solution: part2,
