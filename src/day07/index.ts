@@ -38,6 +38,7 @@ const getHandData = (hand: string, wildcard?: string) => {
     wildcardCount = cardsCount[wildcard];
     cardsCount = { ...cardsCount, [wildcard]: 0 };
   }
+  // we are only interested in the two highest card counts so return and sort counts accordingly
   const cardCounts = Object.values(cardsCount).sort((a, b) => b - a);
   const score = calculateScore(cardCounts, wildcardCount);
   return { value, bid, score };
