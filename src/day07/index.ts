@@ -8,23 +8,24 @@ type HandData = {
   score: number;
 };
 
+// there are seven combinations of hand we are interested in, so can score each from 0 - 6
 const calculateScore = (regularCards: number[], wildcardCount: number): number => {
-  const firstCardCount = regularCards[0] + wildcardCount;
+  const firstCardCount = regularCards[0] + wildcardCount; // wildcards only relevant to first card count
   const hasTwoOfSecondCard = regularCards[1] === 2;
   if (firstCardCount > 5) {
     throw new Error("There cannot be more than 5 of a kind, including wildcards");
   }
   switch (firstCardCount) {
     case 5:
-      return 7;
-    case 4:
       return 6;
+    case 4:
+      return 5;
     case 3:
-      return hasTwoOfSecondCard ? 5 : 4;
+      return hasTwoOfSecondCard ? 4 : 3;
     case 2:
-      return hasTwoOfSecondCard ? 3 : 2;
+      return hasTwoOfSecondCard ? 2 : 1;
   }
-  return 1;
+  return 0;
 };
 
 const getHandData = (hand: string, wildcard?: string) => {
@@ -43,6 +44,8 @@ const getHandData = (hand: string, wildcard?: string) => {
 };
 
 const byScoreAndValue = (a: HandData, b: HandData) => {
+  // cards are converted to pentadecimal system for numerical sorting when the score is the same,
+  // e.g. both hands being compared contain three of a kind (assigned score of 3 in calculateScore)
   return a.score === b.score ? parseInt(a.value, 15) - parseInt(b.value, 15) : a.score - b.score;
 };
 
