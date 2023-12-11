@@ -57,7 +57,6 @@ const part2 = (rawInput: string) => {
       }
       i++;
     }
-    console.log({ components });
     const reversedComponents = components.reverse();
     const previousComponents = reversedComponents.reduce(
       (array: number[], value, i) => {
@@ -69,7 +68,6 @@ const part2 = (rawInput: string) => {
       },
       [reversedComponents[0]],
     );
-    console.log({ previousComponents });
     return previousComponents[previousComponents.length - 1];
   });
   return endValues.reduce((a, b) => a + b, 0);
