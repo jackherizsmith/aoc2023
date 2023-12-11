@@ -30,10 +30,36 @@ const part1 = (rawInput: string): number => {
   return endValues.reduce((a, b) => a + b, 0);
 };
 
-const part2 = (rawInput: string) => {
-  const input = parseInput(rawInput);
+const getPriorDiff = (array: number[]): number | void => {
+  if (array[0] === 0 && array[1] === 0) {
+    return;
+  }
+  if (array.length === 2) {
+    return array[1] - array[0];
+  }
+  const nextDiffs = array.map((value, i) => (array[i + 1] || 0) - value);
+  nextDiffs.pop();
+  return getPriorDiff(nextDiffs);
+};
 
-  return;
+const part2 = (rawInput: string) => {
+  const input = parseInput(rawInput).split("\n");
+  const endValues = input.map((valuesString) => {
+    const values = valuesString.split(" ").map(Number);
+    const components = [values[0]];
+    let i = 2;
+    while (i < values.length) {
+      const nextDiff = getPriorDiff(values.slice(0, i));
+      if (typeof nextDiff === "number") {
+        components.push(nextDiff);
+      } else {
+        break;
+      }
+      i++;
+    }
+    return components.reduce((a, b, i) => a + b * (i % 2 ? -1 : 1), 0);
+  });
+  return endValues.reduce((a, b) => a + b, 0);
 };
 
 run({
@@ -50,10 +76,12 @@ run({
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `0 3 6 9 12 15
+1 3 6 10 15 21
+10 13 16 21 30 45`,
+        expected: 2,
+      },
     ],
     solution: part2,
   },
