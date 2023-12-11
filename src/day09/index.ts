@@ -57,7 +57,20 @@ const part2 = (rawInput: string) => {
       }
       i++;
     }
-    return components.reduce((a, b, i) => a + b * (i % 2 ? -1 : 1), 0);
+    console.log({ components });
+    const reversedComponents = components.reverse();
+    const previousComponents = reversedComponents.reduce(
+      (array: number[], value, i) => {
+        if (i > 0) {
+          const previousComponent = value - array[i - 1];
+          array.push(previousComponent);
+        }
+        return array;
+      },
+      [reversedComponents[0]],
+    );
+    console.log({ previousComponents });
+    return previousComponents[previousComponents.length - 1];
   });
   return endValues.reduce((a, b) => a + b, 0);
 };
